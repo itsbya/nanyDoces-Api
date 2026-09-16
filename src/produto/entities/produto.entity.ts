@@ -12,23 +12,16 @@ export class Produto {
     id: number;
     
     //REGISTRO DO NOME
-    @Transform(({value} : TransformFnParams) => value ?.trim())
-    @IsNotEmpty()
     @Column({length: 100, nullable: false})
     nome : string;
 
     
     //REGISTRO DA DESCRIÇÃO
-    @Transform(({value} : TransformFnParams) => value ?.trim())
-    @IsNotEmpty()
     @Column({length: 1000, nullable: false})
     descricao: string;
 
     
     //REGISTRO DO PREÇO
-    @IsNumber({maxDecimalPlaces: 2})
-    @IsNotEmpty()
-    @IsPositive()
     @Column({
        type: 'decimal',
        precision: 10,
@@ -37,15 +30,9 @@ export class Produto {
     })
     preco: number;
 
-
-    //REGISTRO DO CALORIA
-    @Column({ type: 'int' })
-    caloria: number;
     
 
     //REGISTRO DO IMAGEM
-    @IsString()
-    @IsUrl()
     @Column()
     imagem: string;
 

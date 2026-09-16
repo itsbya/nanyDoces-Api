@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { Produto } from "../entities/produto.entity";
 import { ProdutoService } from "../services/produto.service";
+import { CreateProdutoDto } from "../dto/create-produto-dto";
+import { UpdateProdutoDto } from "../dto/update-produto-dto";
 
 @Controller("/produtos")
 export class ProdutoController {
@@ -21,18 +23,18 @@ export class ProdutoController {
     }
 
 
-    // Bucar por TITULO
-    @Get('titulo/:titulo')
+    // Bucar por NOME
+    @Get('nome/:nome')
     @HttpCode(HttpStatus.OK)
-    findByTitulo(@Param('titulo') titulo: string): Promise<Produto[]> {
-        return this.produtoService.findByTitulo(titulo);
+    findByTitulo(@Param('nome') nome: string): Promise<Produto[]> {
+        return this.produtoService.findByTitulo(nome);
     }
 
 
     // CADASTAR produto
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    create(@Body() produto:Produto): Promise<Produto> {
+    create(@Body() produto: CreateProdutoDto): Promise<Produto> {
         return this.produtoService.create(produto);
     }
 
@@ -40,7 +42,7 @@ export class ProdutoController {
     // ATUALIAR produto
     @Put()
     @HttpCode(HttpStatus.OK)
-    update(@Body() produto: Produto): Promise<Produto> {
+    update(@Body() produto: UpdateProdutoDto): Promise<Produto> {
         return this.produtoService.update(produto);
     }
 

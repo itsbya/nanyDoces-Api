@@ -2,6 +2,8 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, ILike, Repository } from "typeorm";
 import { Produto } from "../entities/produto.entity";
+import { CreateProdutoDto } from "../dto/create-produto-dto";
+import { UpdateProdutoDto } from "../dto/update-produto-dto";
 
 @Injectable()
 export class ProdutoService {
@@ -33,24 +35,25 @@ export class ProdutoService {
 
     }
 
-    // Bucar por TITULO
-    async findByTitulo(titulo: string): Promise<Produto[]> {
+    // Bucar por NOME
+    async findByTitulo(nome: string): Promise<Produto[]> {
         return this.produtoRepository.find({
             where: {
-                titulo: ILike(`%${titulo}`)
+                nome: ILike(`%${nome}`)
             }
         })
     } 
 
 
     // CADASTRAR produto
-    async create(produto: Produto): Promise<Produto> {
-        return await this.produtoRepository.save(produto);
+    async create( produto: CreateProdutoDto): Promise<Produto> {
+        const novoProduto = this.produtoRepository.create(produto);
+        return await this.produtoRepository.save(novoProduto);
     }
 
 
     // ATUALIZAR produto
-    async update(produto: Produto): Promise<Produto> {
+    async update(produto: UpdateProdutoDto): Promise<Produto> {
        await this.findById(produto.id)
 
        return await this.produtoRepository.save(produto);
